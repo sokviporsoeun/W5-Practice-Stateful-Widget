@@ -10,16 +10,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-      appBar: AppBar(
-        title: const Text('Favorite cards'),
-        backgroundColor: Colors.blue,
-      ),
+        appBar: AppBar(
+          title: const Text('Favorite cards'),
+          backgroundColor: Colors.blue,
+        ),
       body: Column(
         children: [
-          // PART 2: Create multiple FavoriteCard widgets
-          FavoriteCard(title: 'Travel', description: 'Explore the world'),
-          FavoriteCard(title: 'Skiing', description: 'Winter sports adventure'),
-          FavoriteCard(title: 'Hiking', description: 'Mountain trails'),
+          FavoriteCard(),
+          FavoriteCard(),
+          FavoriteCard(),
         ],
       ),
     // );
@@ -27,27 +26,18 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 class FavoriteCard extends StatefulWidget {
-  final String title;
-  final String description;
 
-  const FavoriteCard({
-    Key? key,
-    required this.title,
-    required this.description,
-  }) : super(key: key);
+  const FavoriteCard({Key? key}) : super(key: key);
 
   @override
   State<FavoriteCard> createState() => _FavoriteCardState();
 }
 
 class _FavoriteCardState extends State<FavoriteCard> {
-  // Each card manages its own favorite status
   bool isFavorite = false;
 
-  // Toggle favorite status when heart icon is clicked
-  void toggleFavorite() {
+  void clickFavorite() {
     setState(() {
       isFavorite = !isFavorite;
     });
@@ -56,7 +46,6 @@ class _FavoriteCardState extends State<FavoriteCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // PART 1: Layout - Container with border at bottom
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -67,49 +56,39 @@ class _FavoriteCardState extends State<FavoriteCard> {
       ),
       child: Row(
         children: [
-          // PART 1: Expanded widget to spread the column
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Title text
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    widget.title,
-                    style: const TextStyle(
-                      color: Colors.blue,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                // Description text
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 10.0,
-                    right: 10.0,
-                    bottom: 10.0,
-                  ),
-                  child: Text(
-                    widget.description,
-                    style: const TextStyle(
-                      color: Colors.grey,
-                      fontSize: 14,
-                    ),
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "title",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "description",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
           ),
-          IconButton(
-            onPressed: toggleFavorite,
-            icon: Icon(
-              isFavorite ? Icons.favorite : Icons.favorite_border,
-              color: Colors.red,
-              size: 30,
-            ),
-          ),
+          IconButton( onPressed: clickFavorite,
+            icon: Icon( isFavorite ? Icons.favorite : Icons.favorite_border, color: Colors.red, size: 30)),
         ],
       ),
     );
